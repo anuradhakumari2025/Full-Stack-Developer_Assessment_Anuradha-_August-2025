@@ -8,9 +8,9 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Anuradha Kumari",
   "license": "ISC",
-  "description": "",
+  "description": "Internal simulation tool for a delivery company.GreenCart Logistics – Delivery Simulation & KPI Dashboard project.",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
