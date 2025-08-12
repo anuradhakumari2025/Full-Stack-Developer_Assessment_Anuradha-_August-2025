@@ -4,8 +4,9 @@ const Driver = require("../models/driver.model");
 exports.getDrivers = async (req, res) => {
   try {
     const drivers = await Driver.find();
-    res.json(drivers);
+    res.status(201).json({message: "Drivers fetched successfully", drivers});
   } catch (err) {
+    console.error("Error fetching drivers:", err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -13,10 +14,12 @@ exports.getDrivers = async (req, res) => {
 // Get single driver
 exports.getDriver = async (req, res) => {
   try {
-    const driver = await Driver.findById(req.params.id);
+    const {id} = req.params;
+    const driver = await Driver.findById(id);
     if (!driver) return res.status(404).json({ message: "Driver not found" });
-    res.json(driver);
+    res.status(201).json({message: "Driver fetched successfully", driver});
   } catch (err) {
+    console.error("Error fetching driver:", err);
     res.status(500).json({ error: err.message });
   }
 };
@@ -24,10 +27,11 @@ exports.getDriver = async (req, res) => {
 // Create driver
 exports.createDriver = async (req, res) => {
   try {
-    const driver = new Driver(req.body);
-    await driver.save();
-    res.status(201).json(driver);
+    const {name,currentShiftHours,past7DaysWorkHours}=req.body;
+    const driver = await Driver.create({name,currentShiftHours,past7DaysWorkHours});
+    res.status(201).json({message: "Driver created successfully", driver});
   } catch (err) {
+    console.error("Error creating driver:", err);
     res.status(400).json({ error: err.message });
   }
 };
@@ -46,10 +50,12 @@ exports.updateDriver = async (req, res) => {
 // Delete driver
 exports.deleteDriver = async (req, res) => {
   try {
-    const driver = await Driver.findByIdAndDelete(req.params.id);
+    const {id} = req.params;
+    const driver = await Driver.findByIdAndDelete(id);
     if (!driver) return res.status(404).json({ message: "Driver not found" });
     res.json({ message: "Driver deleted" });
   } catch (err) {
+    console.error("Error deleting driver:", err);
     res.status(500).json({ error: err.message });
   }
 };
