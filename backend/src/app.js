@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors');
 const connectDB = require('./db/db');
 const driverRoutes = require('./routes/driver.routes');
+const orderRoutes = require('./routes/order.routes');
+const routeRoutes = require('./routes/route.routes');
 
 app.use(cors());
 app.use(express.json());
@@ -12,6 +14,8 @@ app.get("/", (req, res) => {
   res.send("GreenCart Logistics Backend Running");
 });
 app.use("/api/drivers", driverRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/routes", routeRoutes);
 
 
 module.exports = app;
