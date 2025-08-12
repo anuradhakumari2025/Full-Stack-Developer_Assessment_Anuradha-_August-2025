@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import "./Dashboard.css"; // Added CSS import
+import "./Dashboard.css";
 
 ChartJS.register(
   CategoryScale,
@@ -51,7 +51,7 @@ const Dashboard = () => {
       <div className="kpi-cards">
         <div className="card">
           <h3>Total Profit</h3>
-          <p>₹{kpi.totalProfit}</p>
+          <p>₹{kpi.totalProfit.toFixed(2)}</p>
         </div>
         <div className="card">
           <h3>Efficiency Score</h3>

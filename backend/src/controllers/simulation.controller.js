@@ -13,7 +13,6 @@ exports.runSimulation = async (req, res) => {
 
     const orders = await Order.find();
     const routes = await Route.find();
-    const drivers = await Driver.find();
 
     let totalProfit = 0;
     let onTimeDeliveries = 0;
@@ -21,9 +20,30 @@ exports.runSimulation = async (req, res) => {
     let baseFuelCost = 0;
     let fuelSurcharge = 0;
 
+    // Driver schedule tracking
+    let driverHoursUsed = Array(Number(availableDrivers)).fill(0);
+    const shiftStartHour = parseInt(startTime.split(":")[0], 10);
+
     orders.forEach(order => {
       const route = routes.find(r => r.routeId === order.assignedRoute);
       if (!route) return;
+
+      // Find driver with least hours used
+      let driverIndex = driverHoursUsed.indexOf(Math.min(...driverHoursUsed));
+      let currentDriverHours = driverHoursUsed[driverIndex];
+
+      // Delivery time (in hours)
+      let deliveryTimeHours = route.baseTime / 60;
+
+      // Check if driver exceeds max hours
+      if (currentDriverHours + deliveryTimeHours > Number(maxHoursPerDriver)) {
+        lateDeliveries++;
+        totalProfit -= 50; // Penalty for missed delivery
+        return;
+      }
+
+      // Assign order to driver
+      driverHoursUsed[driverIndex] += deliveryTimeHours;
 
       // Fuel cost
       let orderFuelCost = route.distanceKm * 5;
@@ -33,8 +53,9 @@ exports.runSimulation = async (req, res) => {
       }
       baseFuelCost += route.distanceKm * 5;
 
-      const simulatedDeliveryTime = route.baseTime; // base time in mins
-      const deliveryDeadline = route.baseTime + 10;
+      // Calculate deadline
+      const deliveryDeadline = route.baseTime + 10; // minutes
+      const simulatedDeliveryTime = route.baseTime; // simple base time in mins
 
       let penalty = 0;
       let bonus = 0;
@@ -55,7 +76,7 @@ exports.runSimulation = async (req, res) => {
 
     const efficiencyScore = (onTimeDeliveries / orders.length) * 100;
 
-    // Saving simulation result
+    // Save simulation result
     await Simulation.create({
       availableDrivers,
       startTime,
@@ -70,7 +91,7 @@ exports.runSimulation = async (req, res) => {
       }
     });
 
-    res.json({
+    res.status(200).json({
       totalProfit,
       efficiencyScore,
       onTimeDeliveries,
