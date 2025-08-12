@@ -10,7 +10,7 @@ const authRoutes = require('./routes/auth.routes');
 
 app.use(cors(
   {
-    origin: "http://localhost:5173", 
+    origin: "https://full-stack-developer-assessment-anuradha.onrender.com", 
     credentials: true,
   }
 ));
