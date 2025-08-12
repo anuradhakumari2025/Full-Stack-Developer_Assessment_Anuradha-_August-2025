@@ -7,7 +7,12 @@ const orderRoutes = require('./routes/order.routes');
 const routeRoutes = require('./routes/route.routes');
 const simulationRoutes = require('./routes/simulation.routes');
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: "http://localhost:5173", 
+    credentials: true,
+  }
+));
 app.use(express.json());
 connectDB()
 // Basic route

@@ -84,3 +84,13 @@ exports.runSimulation = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getLatestSimulation = async (req, res) => {
+  try {
+    const latest = await Simulation.findOne().sort({ createdAt: -1 });
+    if (!latest) return res.status(404).json({ message: "No simulations found" });
+    res.json(latest);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
