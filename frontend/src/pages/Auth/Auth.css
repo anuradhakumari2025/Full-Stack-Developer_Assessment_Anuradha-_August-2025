@@ -1,0 +1,64 @@
+:root {
+  --card-bg: #ffffff;
+  --card-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  --text-color: #333333;
+  --text-light: #ffffff;
+  --border-color: #dddddd;
+  --accent-color: #28a745; /* Green theme */
+}
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: var(--card-shadow);
+}
+
+.auth-container h2 {
+  text-align: center;
+  color: var(--text-color);
+  margin-bottom: 1rem;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.auth-container button {
+  background-color: var(--accent-color);
+  color: var(--text-light);
+  border: none;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  opacity: 0.9;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .auth-container {
+    margin: 20px;
+    padding: 1.5rem;
+  }
+}
