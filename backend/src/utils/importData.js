@@ -68,7 +68,7 @@ const startImport = async () => {
       path.join(__dirname, "../utils/orders.csv"),
       Order,
       (row) => {
-        // Parse delivery_time as "HH:mm" and set today's date
+        // Parsed delivery_time as "HH:mm" and set today's date
         let deliveryTimestamp = null;
         if (row.delivery_time) {
           const [hours, minutes] = row.delivery_time.split(":").map(Number);
