@@ -1,10 +1,10 @@
 import { Route,  Routes } from "react-router-dom";
-import Simulation from "../pages/Simulation";
-import Drivers from "../pages/Drivers";
-import RoutesPage from "../pages/RoutesPage";
-import Orders from "../pages/Orders";
 import Navbar from "../components/Navbar/Navbar";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import Simulation from "../pages/Simulation/Simulation";
+import Drivers from "../pages/Drivers/Drivers";
+import RoutesPage from "../pages/RoutesPage/RoutesPage";
+import Orders from "../pages/Orders/Orders";
 
 const MainRoute = () => {
   return (
